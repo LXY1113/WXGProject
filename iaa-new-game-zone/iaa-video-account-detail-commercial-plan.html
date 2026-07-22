@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>视频号｜IAA 新游专区</title>
+  <style>
+    :root { --green:#00b86c; --green-deep:#019456; --green-pale:#effaf4; --ink:#25282d; --secondary:#626a72; --muted:#90979d; --line:#e9edeb; --canvas:#f5f7f8; --ease:cubic-bezier(.22,1,.36,1); }
+    * { box-sizing:border-box; } html,body { min-width:1180px; margin:0; background:var(--canvas); } body { color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; -webkit-font-smoothing:antialiased; } a,button { color:inherit; font:inherit; } a { text-decoration:none; }
+    .topbar { display:flex; align-items:center; height:72px; padding:0 44px; background:#fff; border-bottom:1px solid #edf0ee; }
+    .brand { display:flex; align-items:center; gap:11px; color:#393e43; font-size:18px; font-weight:500; }.brand-mark { position:relative; width:28px; height:28px; border-radius:50%; background:var(--green); }.brand-mark::before,.brand-mark::after { position:absolute; content:""; border:2px solid #fff; border-radius:8px; transform:rotate(-39deg); }.brand-mark::before { top:5px; left:8px; width:8px; height:14px; border-right:0; }.brand-mark::after { top:8px; left:13px; width:6px; height:10px; border-left:0; }.top-divider { width:1px; height:20px; margin:0 18px; background:#e3e7e5; }.top-context { font-size:16px; }
+    .layout { display:grid; grid-template-columns:210px minmax(0,1fr); min-height:calc(100vh - 72px); }.sidebar { padding:30px 20px; border-right:1px solid #eef0ef; background:#f8f9f9; }.nav-label { margin:0 0 12px 12px; color:#a0a6ab; font-size:12px; }.nav-item { display:flex; align-items:center; gap:11px; height:42px; padding:0 12px; border-radius:5px; color:#6e767d; font-size:14px; }.nav-item.active { color:var(--green-deep); background:#e9f8f0; font-weight:500; }.nav-dot { width:6px; height:6px; border-radius:50%; background:currentColor; opacity:.8; }
+    .main { padding:38px 54px 68px; }.crumb { display:flex; align-items:center; gap:9px; color:#9aa0a5; font-size:13px; }.crumb a:hover { color:var(--green-deep); }.crumb-sep { color:#c4c9c6; }.workspace { max-width:1180px; margin:22px auto 0; padding:0 42px 52px; overflow:hidden; background:#fff; border-radius:8px; box-shadow:0 6px 24px rgba(30,48,39,.025); }
+    .intro { padding:50px 0 38px; border-bottom:1px solid var(--line); } h1 { margin:0 0 12px; font-size:30px; line-height:1.25; font-weight:500; letter-spacing:-.5px; }.intro p { max-width:690px; margin:0; color:var(--secondary); font-size:14px; line-height:1.85; }.intro-kicker { display:inline-flex; align-items:center; gap:7px; margin-bottom:13px; color:var(--green-deep); font-size:13px; font-weight:600; }.intro-kicker::before { width:6px; height:6px; border-radius:50%; background:var(--green); content:""; }
+    .section { padding-top:36px; }.section-head { margin-bottom:18px; } h2 { margin:0; font-size:19px; line-height:1.4; font-weight:500; }.section-head p { margin:5px 0 0; color:var(--muted); font-size:13px; }.resource-list { border-top:1px solid var(--line); }
+    .resource,.guide-toggle { display:grid; grid-template-columns:44px minmax(0,1fr) auto; align-items:center; width:100%; min-height:88px; gap:16px; padding:15px 8px; border:0; border-bottom:1px solid var(--line); background:transparent; color:inherit; text-align:left; transition:background .2s var(--ease),padding .2s var(--ease); }.resource:hover,.guide-toggle:hover,.guide-group[data-open="true"] .guide-toggle { padding-right:16px; padding-left:16px; background:#f5fbf8; }.resource-index { color:#b4bbb7; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; }.resource-name { display:block; color:#363b40; font-size:15px; font-weight:500; }.resource-desc { display:block; margin-top:5px; color:#879096; font-size:12px; line-height:1.55; }.resource-action,.guide-option-action { display:inline-flex; align-items:center; justify-content:center; height:34px; padding:0 12px; border:0; border-radius:4px; color:#fff; background:var(--green); font-size:13px; font-weight:600; line-height:1; white-space:nowrap; transition:background .18s ease,transform .2s var(--ease); }.resource:hover .resource-action,.guide-option:hover .guide-option-action { color:#fff; background:var(--green-deep); }
+    .guide-toggle { cursor:pointer; }.guide-toggle-action { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:32px; padding:0 12px; border:1px solid #dce3df; border-radius:4px; color:#57635d; background:#fff; font-size:12px; font-weight:500; white-space:nowrap; transition:border-color .18s ease,color .18s ease,background .18s ease; }.guide-toggle:hover .guide-toggle-action { border-color:#b6d8c5; color:var(--green-deep); background:#fbfefc; }.chevron { width:8px; height:8px; margin-top:-4px; border:solid currentColor; border-width:0 1.5px 1.5px 0; transform:rotate(45deg); transition:transform .22s var(--ease),margin .22s var(--ease); }.guide-group[data-open="true"] .chevron { margin-top:4px; transform:rotate(225deg); }
+    .guide-details { display:grid; grid-template-rows:0fr; transition:grid-template-rows .28s var(--ease); }.guide-group[data-open="true"] .guide-details { grid-template-rows:1fr; }.guide-inner { min-height:0; overflow:hidden; }.guide-options { margin:0 16px 0 60px; border-top:1px solid #e8efeb; opacity:0; transform:translateY(-6px); transition:opacity .18s ease,transform .28s var(--ease); }.guide-group[data-open="true"] .guide-options { padding:8px 0 12px; opacity:1; transform:translateY(0); }.guide-option { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:18px; min-height:62px; padding:10px 12px; border-radius:4px; }.guide-option:hover { background:#f5fbf8; }.guide-option-name { display:block; color:#4b5359; font-size:13px; font-weight:500; }.guide-option-desc { display:block; margin-top:4px; color:#8a9298; font-size:12px; line-height:1.5; }.guide-option-action { height:30px; padding:0 11px; font-size:12px; }
+    .footer-note { display:flex; align-items:center; gap:8px; margin-top:42px; padding-top:19px; border-top:1px solid var(--line); color:#a0a6aa; font-size:12px; }.footer-note::before { display:grid; place-items:center; width:14px; height:14px; border:1px solid #bec5c1; border-radius:50%; content:"i"; font-family:Georgia,serif; font-size:10px; }.resource,.guide-group { animation:enter .5s var(--ease) both; }.guide-group:nth-child(2) { animation-delay:.07s; }.resource:nth-child(3) { animation-delay:.14s; } @keyframes enter { from { opacity:0; transform:translateY(9px); } to { opacity:1; transform:translateY(0); } } @media(max-width:1240px) { .main { padding:30px; }.workspace { padding-right:36px; padding-left:36px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>小程序</span></div><span class="top-divider"></span><span class="top-context">IAA 新游专区</span></header>
+  <div class="layout">
+    <nav class="sidebar" aria-label="专区导航"><p class="nav-label">新游成长地图</p><a class="nav-item" href="./index.html"><span class="nav-dot"></span>规划立项期</a><a class="nav-item" href="./index.html"><span class="nav-dot"></span>开发接入期</a><a class="nav-item" href="./index.html"><span class="nav-dot"></span>发布启动期</a><a class="nav-item active" href="./index.html"><span class="nav-dot"></span>成长放大期</a></nav>
+    <main class="main">
+      <div class="crumb"><a href="./index.html">新游专区</a><span class="crumb-sep">/</span><span>成长放大期</span><span class="crumb-sep">/</span><span>基础能力</span><span class="crumb-sep">/</span><span>视频号</span></div>
+      <div class="workspace">
+        <section class="intro" aria-labelledby="page-title"><span class="intro-kicker">成长放大期 · 基础能力</span><h1 id="page-title">视频号</h1><p>借助短视频内容与直播场景推广小游戏，拓展内容渠道增量，持续放大游戏曝光与转化。</p></section>
+        <section class="section" aria-labelledby="growth-title">
+          <div class="section-head"><h2 id="growth-title">视频号增长</h2><p>从优质内容加热到效果结算与直播合作，选择适合当前阶段的增长方式。</p></div>
+          <div class="resource-list">
+            <a class="resource" href="#" data-resource="短视频加热"><span class="resource-index">01</span><span><strong class="resource-name">短视频加热</strong><span class="resource-desc">通过视频号加热能力扩大优质短视频内容的曝光规模。</span></span><span class="resource-action">详细指引</span></a>
+            <a class="resource" href="#" data-resource="短视频 CPS 任务"><span class="resource-index">02</span><span><strong class="resource-name">短视频 CPS 任务</strong><span class="resource-desc">通过达人短视频内容推广小游戏，并按任务规则进行 CPS 结算。</span></span><span class="resource-action">详细指引</span></a>
+            <article class="guide-group" data-open="false">
+              <button class="guide-toggle" type="button" aria-expanded="false" aria-controls="live-guide-options" data-collapsed-label="展开直播" data-expanded-label="收起直播"><span class="resource-index">03</span><span><strong class="resource-name">直播</strong><span class="resource-desc">通过视频号直播场景推广小游戏，拓展直播渠道增量。</span></span><span class="guide-toggle-action"><span class="toggle-label">展开直播</span><i class="chevron" aria-hidden="true"></i></span></button>
+              <div class="guide-details" id="live-guide-options"><div class="guide-inner"><div class="guide-options">
+                <a class="guide-option" href="#" data-resource="小游戏 X 视频号直播推游戏任务指引"><span><strong class="guide-option-name">小游戏 X 视频号直播推游戏任务指引</strong><span class="guide-option-desc">了解视频号直播推游戏任务的参与方式与相关规则。</span></span><span class="guide-option-action">详细指引</span></a>
+                <a class="guide-option" href="#" data-resource="视频号直播小游戏机构合作指引"><span><strong class="guide-option-name">视频号直播小游戏机构合作指引</strong><span class="guide-option-desc">了解小游戏与视频号直播机构合作的接入流程。</span></span><span class="guide-option-action">详细指引</span></a>
+              </div></div></div>
+            </article>
+          </div>
+        </section>
+        <div class="footer-note">文档类内容将在新页面打开。</div>
+      </div>
+    </main>
+  </div>
+  <script>
+    const linkConfig = {
+      "短视频加热": "https://developers.weixin.qq.com/community/minigame/doc/00042efabd4df8a76e725dd7d6b808?blockType=2",
+      "短视频 CPS 任务": "https://developers.weixin.qq.com/community/minigame/doc/00060a0cb787608b7844e0c5d61c08",
+      "小游戏 X 视频号直播推游戏任务指引": "https://developers.weixin.qq.com/community/minigame/doc/00086203218d000f2663730c466808?blockType=2",
+      "视频号直播小游戏机构合作指引": "https://developers.weixin.qq.com/community/minigame/doc/000866044c0bc86e43c33d62961008?blockType=2"
+    };
+    document.querySelectorAll("[data-resource]").forEach(item => item.addEventListener("click", event => { const url = linkConfig[item.dataset.resource]; if (!url) return; event.preventDefault(); window.open(url, "_blank", "noopener,noreferrer"); }));
+    document.querySelectorAll(".guide-toggle").forEach(button => button.addEventListener("click", () => { const group = button.closest(".guide-group"); const isOpen = group.dataset.open === "true"; group.dataset.open = String(!isOpen); button.setAttribute("aria-expanded", String(!isOpen)); button.querySelector(".toggle-label").textContent = isOpen ? button.dataset.collapsedLabel : button.dataset.expandedLabel; }));
+  </script>
+</body>
+</html>

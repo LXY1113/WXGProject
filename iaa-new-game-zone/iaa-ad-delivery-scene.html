@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>广告投放｜IAA 新游专区</title>
+  <style>
+    :root {
+      --green: #00b86c;
+      --green-deep: #019456;
+      --green-pale: #eaf8f1;
+      --ink: #25282d;
+      --secondary: #626a72;
+      --muted: #90979d;
+      --line: #e9edeb;
+      --canvas: #f5f7f8;
+      --panel: #fff;
+      --tile: #f6f7f7;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+    * { box-sizing: border-box; }
+    html, body { min-width: 1180px; margin: 0; background: var(--canvas); }
+    body { color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; -webkit-font-smoothing: antialiased; }
+    button, a { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar { height: 72px; display: flex; align-items: center; padding: 0 44px; background: #fff; border-bottom: 1px solid #edf0ee; }
+    .brand { display: flex; align-items: center; gap: 11px; color: #393e43; font-size: 18px; font-weight: 500; }
+    .brand-mark { width: 28px; height: 28px; border-radius: 50%; background: var(--green); position: relative; }
+    .brand-mark::before, .brand-mark::after { content: ""; position: absolute; border: 2px solid #fff; border-radius: 8px; transform: rotate(-39deg); }
+    .brand-mark::before { width: 8px; height: 14px; left: 8px; top: 5px; border-right: 0; }
+    .brand-mark::after { width: 6px; height: 10px; left: 13px; top: 8px; border-left: 0; }
+    .top-divider { width: 1px; height: 20px; margin: 0 18px; background: #e3e7e5; }
+    .top-context { font-size: 16px; }
+
+    .layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); min-height: calc(100vh - 72px); }
+    .sidebar { padding: 30px 20px; border-right: 1px solid #eef0ef; background: #f8f9f9; }
+    .nav-label { margin: 0 0 12px 12px; color: #a0a6ab; font-size: 12px; }
+    .nav-item { display: flex; align-items: center; gap: 11px; height: 42px; padding: 0 12px; border-radius: 5px; color: #6e767d; font-size: 14px; }
+    .nav-item.active { color: var(--green-deep); background: #e9f8f0; font-weight: 500; }
+    .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .8; }
+
+    .main { padding: 38px 54px 68px; }
+    .crumb { display: flex; gap: 9px; align-items: center; color: #9aa0a5; font-size: 13px; }
+    .crumb a:hover { color: var(--green-deep); }
+    .crumb-sep { color: #c4c9c6; }
+    .workspace { max-width: 1180px; margin: 22px auto 0; padding: 0 42px 50px; overflow: hidden; background: var(--panel); border-radius: 8px; box-shadow: 0 6px 24px rgba(30,48,39,.025); }
+
+    .intro { position: relative; padding: 46px 0 35px; border-bottom: 1px solid var(--line); }
+    h1 { margin: 0 0 11px; font-size: 30px; line-height: 1.3; font-weight: 500; letter-spacing: -.5px; }
+    .intro p { max-width: 720px; margin: 0; color: var(--secondary); font-size: 14px; line-height: 1.8; }
+    .delivery-portal { position: absolute; top: 48px; right: 0; display: inline-flex; align-items: center; justify-content: center; min-width: 118px; height: 40px; padding: 0 17px; border-radius: 4px; color: #fff; background: var(--green); font-size: 13px; font-weight: 600; transition: background .18s ease, transform .2s var(--ease); }
+    .delivery-portal:hover { background: var(--green-deep); transform: translateY(-2px); }
+    .weekly-notice { display: flex; align-items: center; gap: 10px; max-width: 760px; margin-top: 24px; padding: 12px 15px; border-radius: 4px; color: #5f573d; background: #fff7d9; font-size: 13px; line-height: 1.5; transition: background .18s ease; }
+    .weekly-notice:hover { background: #fff1bd; }
+    .weekly-notice-mark { display: grid; flex: 0 0 auto; place-items: center; width: 18px; height: 18px; border-radius: 50%; color: #a47c20; background: #ffedb0; font-size: 12px; font-weight: 700; }
+    .weekly-notice strong { color: #554b2e; font-weight: 500; }
+    .all-guides-link { display: inline-flex; margin-top: 12px; color: var(--green-deep); font-size: 13px; font-weight: 500; }
+    .all-guides-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+    .section { padding-top: 36px; }
+    .section + .section { margin-top: 42px; padding-top: 40px; border-top: 1px solid var(--line); }
+    .section-head { margin-bottom: 18px; }
+    h2 { margin: 0; font-size: 20px; line-height: 1.4; font-weight: 500; }
+    .section-head p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+
+    .guide-list { display: grid; gap: 10px; }
+    .guide-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px; min-height: 86px; padding: 18px 20px; border-radius: 6px; background: var(--tile); transition: background .18s ease, transform .2s var(--ease); }
+    .guide-item:hover { background: #eef8f3; transform: translateX(3px); }
+    .guide-item h3 { margin: 0; font-size: 15px; font-weight: 500; }
+    .guide-item p { margin: 6px 0 0; color: #858d93; font-size: 12px; line-height: 1.6; }
+    .guide-action { color: var(--green-deep); font-size: 13px; font-weight: 500; white-space: nowrap; }
+    .guide-action::after { content: " →"; }
+
+    .scene-tabs { display: flex; gap: 10px; margin-bottom: 18px; }
+    .scene-tab { height: 38px; padding: 0 20px; border: 0; border-radius: 20px; color: #60686e; background: var(--tile); cursor: pointer; font-size: 14px; transition: color .18s ease, background .18s ease; }
+    .scene-tab[aria-selected="true"] { color: var(--green-deep); background: var(--green-pale); font-weight: 500; }
+    .scene-panel { display: none; }
+    .scene-panel[data-visible="true"] { display: block; animation: panel-in .3s var(--ease) both; }
+    .scene-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .scene-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .scene-card { min-height: 204px; display: flex; flex-direction: column; padding: 23px 22px 20px; border-radius: 6px; background: var(--tile); }
+    .scene-label { color: #9aa1a6; font-size: 12px; }
+    .scene-card h3 { margin: 12px 0 8px; font-size: 18px; font-weight: 500; }
+    .scene-card p { margin: 0; color: #7c858b; font-size: 13px; line-height: 1.7; }
+    .scene-card-footer { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 18px; }
+    .scene-link { display: inline-flex; align-items: center; min-height: 32px; padding: 0 11px; border: 0; border-radius: 4px; color: var(--green-deep); background: var(--green-pale); cursor: pointer; font-size: 12px; font-weight: 500; }
+    .scene-link:hover { color: #fff; background: var(--green); }
+    .scene-link.disabled { color: #a4aaa7; background: #ecefee; cursor: default; }
+    .panel-footer { display: flex; justify-content: flex-end; margin-top: 15px; }
+    .full-link { padding: 0; border: 0; color: var(--green-deep); background: transparent; cursor: pointer; font-size: 13px; font-weight: 500; }
+    .full-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+    .footer-note { margin-top: 42px; padding-top: 19px; border-top: 1px solid var(--line); color: #a0a6aa; font-size: 12px; }
+    .toast { position: fixed; left: 50%; bottom: 38px; z-index: 20; padding: 11px 17px; border-radius: 5px; color: #fff; background: rgba(34,39,36,.88); font-size: 13px; opacity: 0; pointer-events: none; transform: translate(-50%, 10px); transition: opacity .18s ease, transform .22s var(--ease); }
+    .toast.visible { opacity: 1; transform: translate(-50%, 0); }
+    @keyframes panel-in { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 1240px) { .main { padding: 30px; } .workspace { padding-right: 34px; padding-left: 34px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>小程序</span></div><span class="top-divider"></span><span class="top-context">IAA 新游专区</span></header>
+  <div class="layout">
+    <nav class="sidebar" aria-label="专区导航">
+      <p class="nav-label">新游成长地图</p>
+      <a class="nav-item" href="./index.html"><span class="nav-dot"></span>规划立项期</a>
+      <a class="nav-item" href="./index.html"><span class="nav-dot"></span>开发接入期</a>
+      <a class="nav-item" href="./index.html"><span class="nav-dot"></span>发布启动期</a>
+      <a class="nav-item active" href="./index.html"><span class="nav-dot"></span>成长放大期</a>
+    </nav>
+    <main class="main">
+      <div class="crumb"><a href="./index.html">新游专区</a><span class="crumb-sep">/</span><span>成长放大期</span><span class="crumb-sep">/</span><span>广告投放</span></div>
+      <div class="workspace">
+        <section class="intro">
+          <h1>广告投放</h1>
+          <p>从投放基础配置和效果策略开始，再根据朋友圈、视频号与小程序场景选择适合的广告能力。</p>
+          <a class="delivery-portal" href="https://e.qq.com/" target="_blank" rel="noopener noreferrer">直达投放端</a>
+          <a class="weekly-notice" href="https://doc.weixin.qq.com/doc/w3_AA4AhAbdAFwVWRIg87OQz6Z0JcOw8?scode=AJEAIQdfAAoIk6fPhLAY8AmwYdAJE" target="_blank" rel="noopener noreferrer"><span class="weekly-notice-mark">i</span><strong>点击查看 IAA 微信小游戏投放周报【7 月 16 日更新】</strong></a>
+          <a class="all-guides-link" href="https://doc.weixin.qq.com/doc/w3_AA4AhAbdAFwVWRIg87OQz6Z0JcOw8?scode=AJEAIQdfAAoIk6fPhLAY8AmwYdAJE" target="_blank" rel="noopener noreferrer">没找到想要的？点击查看完整广告投放文档 →</a>
+        </section>
+
+        <section class="section" aria-labelledby="guide-title">
+          <div class="section-head"><h2 id="guide-title">投放教程与策略</h2><p>先完成基础配置，再结合效果问题定位投放优化方向。</p></div>
+          <div class="guide-list">
+            <a class="guide-item" href="https://doc.weixin.qq.com/doc/w3_AbwAgwZsAFEn2FDDYomQauaB9MmDf?scode=AJEAIQdfAAolBqRZ1aAY8AmwYdAJE" target="_blank" rel="noopener noreferrer"><span><h3>投放基础教程</h3><p>查看小游戏 3.0 投放指引，了解账户、计划、素材配置及基础投放流程。</p></span><span class="guide-action">查看企微文档</span></a>
+            <a class="guide-item" href="https://doc.weixin.qq.com/doc/w3_AAwAWwZBACkYnxMo7lgSS67iLHRau?scode=AJEAIQdfAAohGnN9YgAY8AmwYdAJE" target="_blank" rel="noopener noreferrer"><span><h3>投放策略</h3><p>查看 IAA 微信小游戏基建及效果问题建议，定位常见投放问题并建立优化方法。</p></span><span class="guide-action">查看企微文档</span></a>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="scene-title">
+          <div class="section-head"><h2 id="scene-title">广告场景</h2><p>选择主要投放场景，查看该场景下可使用的广告形式和能力说明。</p></div>
+          <div class="scene-tabs" role="tablist" aria-label="广告场景">
+            <button class="scene-tab" type="button" role="tab" aria-selected="true" data-scene="moments">朋友圈</button>
+            <button class="scene-tab" type="button" role="tab" aria-selected="false" data-scene="channels">视频号</button>
+            <button class="scene-tab" type="button" role="tab" aria-selected="false" data-scene="miniprogram">小程序</button>
+          </div>
+
+          <div class="scene-panel" data-panel="moments" data-visible="true">
+            <div class="scene-grid">
+              <article class="scene-card"><span class="scene-label">朋友圈 · 多图素材</span><h3>九图</h3><p>使用常规多图形式连续展示游戏卖点，适合通过多组画面呈现玩法与内容丰富度。</p><div class="scene-card-footer"><a class="scene-link" href="https://docs.qq.com/doc/DUEl3RHZaUHd2WVNp" target="_blank" rel="noopener noreferrer">查看投放指引</a></div></article>
+              <article class="scene-card"><span class="scene-label">朋友圈 · 互动信息</span><h3>首条评论</h3><p>在广告首条评论中补充说明、活动信息或互动内容，延展朋友圈广告表达空间。</p><div class="scene-card-footer"><a class="scene-link" href="https://docs.qq.com/doc/DR1ZDdnltbkZVeWZy" target="_blank" rel="noopener noreferrer">查看能力说明</a></div></article>
+              <article class="scene-card"><span class="scene-label">朋友圈 · 链接组件</span><h3>图文链接</h3><p>通过图文链接组件承接进一步介绍与转化路径，为广告内容补充清晰的访问入口。</p><div class="scene-card-footer"><a class="scene-link" href="https://docs.qq.com/doc/DR1dlT0VaQUJYSmVa" target="_blank" rel="noopener noreferrer">查看投放指引</a></div></article>
+            </div>
+            <div class="panel-footer"><a class="full-link" href="https://support.e.qq.com/detail?cid=3704&amp;pid=12650" target="_blank" rel="noopener noreferrer">查看完整能力 →</a></div>
+          </div>
+
+          <div class="scene-panel" data-panel="channels" data-visible="false">
+            <div class="scene-grid">
+              <article class="scene-card"><span class="scene-label">视频号 · 内容加热</span><h3>原生营销</h3><p>针对视频号原生内容进行投放，支持自有视频或互选内容加热，并承接点击、点赞、小店引流和关注等诉求。</p><div class="scene-card-footer"><a class="scene-link" href="https://support.e.qq.com/detail?cid=3707&amp;pid=12647" target="_blank" rel="noopener noreferrer">查看能力说明</a></div></article>
+              <article class="scene-card"><span class="scene-label">视频号 · 创作者合作</span><h3>互选内容营销</h3><p>客户和视频号通过微信营销平台双向互选、自由达成合作的一种投放模式。</p><div class="scene-card-footer"><a class="scene-link" href="https://support.e.qq.com/detail?cid=3709&amp;pid=2430" target="_blank" rel="noopener noreferrer">查看能力说明</a></div></article>
+              <article class="scene-card"><span class="scene-label">视频号 · 评论场景</span><h3>评论区营销</h3><p>用户浏览视频号优质原创视频并主动打开评论区时，将有机会看到系统推荐的营销内容。</p><div class="scene-card-footer"><a class="scene-link" href="https://support.e.qq.com/detail?cid=4720&amp;pid=12305" target="_blank" rel="noopener noreferrer">查看能力说明</a></div></article>
+            </div>
+          </div>
+
+          <div class="scene-panel" data-panel="miniprogram" data-visible="false">
+            <div class="scene-grid two">
+              <article class="scene-card"><span class="scene-label">小程序 · 轻量体验</span><h3>试玩广告</h3><p>在小游戏拉起之前，或覆盖在小游戏之上拉起一个更轻量的游戏体验，让用户提前了解核心玩法。</p><div class="scene-card-footer"><a class="scene-link" href="https://docs.qq.com/doc/DUFpxWUpOdGhEb0FJ" target="_blank" rel="noopener noreferrer">官方文档</a><button class="scene-link disabled placeholder-trigger" type="button" data-label="MP 内部跳转">MP 内部跳转</button></div></article>
+              <article class="scene-card"><span class="scene-label">小程序 · 激励互动</span><h3>直玩广告</h3><p>通过激励直玩能力让用户在广告场景内直接体验游戏内容，缩短从广告兴趣到真实游戏体验的路径。</p><div class="scene-card-footer"><a class="scene-link" href="https://docs.qq.com/doc/DUG9ScmRYRkxXa3hu" target="_blank" rel="noopener noreferrer">官方文档</a></div></article>
+            </div>
+            <div class="panel-footer"><button class="full-link placeholder-trigger" type="button" data-label="试玩广告与直玩广告的区别">两者区别？点击查看 →</button></div>
+          </div>
+        </section>
+        <div class="footer-note">外部文档将在新页面打开；未配置的 MP 内部入口保留为原型占位。</div>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const tabs = document.querySelectorAll(".scene-tab");
+    const panels = document.querySelectorAll(".scene-panel");
+    tabs.forEach(tab => tab.addEventListener("click", () => {
+      tabs.forEach(item => item.setAttribute("aria-selected", String(item === tab)));
+      panels.forEach(panel => panel.dataset.visible = String(panel.dataset.panel === tab.dataset.scene));
+    }));
+
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    document.querySelectorAll(".placeholder-trigger").forEach(button => button.addEventListener("click", () => {
+      toast.textContent = button.dataset.label + "：入口待配置";
+      toast.classList.add("visible");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("visible"), 2000);
+    }));
+  </script>
+</body>
+</html>
