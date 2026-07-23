@@ -700,7 +700,13 @@
       gap: 16px;
     }
 
-    .ability-actions { display: flex; align-items: center; gap: 8px; }
+    .ability-actions {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
 
     .ability-name {
       margin: 0;
@@ -740,6 +746,17 @@
 
     .ability-detail:hover { background: var(--green-dark); }
     .ability-detail:active { transform: scale(0.97); }
+
+    .ability-detail.secondary {
+      padding: 0 14px;
+      background: #eef0f1;
+      color: #5f676e;
+    }
+
+    .ability-detail.secondary:hover {
+      background: #e7e9ea;
+      color: #32383d;
+    }
 
     .ability-description {
       display: -webkit-box;
@@ -1081,16 +1098,15 @@
         groups: [
           { title: "基础能力", hint: "建议上线前优先完成", items: [
             { name: "广告变现规划", description: "提前了解广告形式，规划游戏内的广告点位、触发时机与接入方案。", source: "规划指引 / 案例教程", type: "document", tags: ["广告点位", "变现规划"] },
-            { name: "PC 拓展屏", recommended: true, description: "拓展小游戏在 PC 场景下的展示和操作体验。", source: "MP 内部能力", type: "internal", tags: ["体验", "PC 场景"] },
-            { name: "转发分享", recommended: true, description: "建立游戏分享链路，支持内容传播、好友互动与自然拉新。", source: "MP 内部能力 / 官方文档", type: "internal", tags: ["社交", "分享"] }
+            { name: "转发分享", recommended: true, description: "建立游戏分享链路，支持内容传播、好友互动与自然拉新。", source: "MP 内部能力 / 官方文档", type: "internal", tags: ["社交", "分享"] },
+            { name: "PC 端适配", recommended: true, description: "适配小游戏在 PC 端的展示、交互与操作体验，拓展桌面场景。", source: "官方文档", type: "document", tags: ["体验", "PC 场景"] }
           ]},
           { title: "进阶能力", hint: "结合玩法和用户运营需求接入", items: [
             { name: "一次性订阅消息", isNew: true, update: "新增订阅消息效果查看，支持观察触达与回流表现。", description: "在合规前提下触达用户，支持关键状态提醒和用户召回。", source: "MP 内部能力", type: "internal", tags: ["触达", "召回"] },
             { name: "评价与推荐", description: "完善评价相关能力，积累用户口碑并提升游戏推荐效率。", source: "MP 内部能力", type: "internal", tags: ["评价", "推荐"] }
           ]},
           { title: "提审与备案", hint: "完成发布前的审核与备案流程", items: [
-            { name: "版本提审", description: "提交小游戏版本审核并查看审核进度。", source: "功能占位", type: "internal", tags: ["提审", "发布"] },
-            { name: "小游戏备案", description: "查看备案要求并完成备案材料准备。", source: "功能占位", type: "internal", tags: ["备案", "合规"] }
+            { name: "提审与备案", description: "了解小游戏发布前的版本提审、备案要求及完整上线流程。", source: "官方文档", type: "document", tags: ["提审", "备案"] }
           ]}
         ]
       },
@@ -1100,15 +1116,18 @@
         groups: [
           { title: "用户获取", hint: "获取首批曝光与用户，完成冷启动验证", items: [
             { name: "广告开通与配置", required: true, description: "完成广告账户、投放能力及基础广告配置，为后续放量做好准备。", source: "官方文档", type: "document", tags: ["广告", "配置"] },
-            { name: "CPS 合作", recommended: true, description: "通过视频号短视频或直播任务，以效果结算方式拓展内容渠道流量。", source: "MP 内部能力", type: "internal", tags: ["视频号", "CPS"] },
-            { name: "新游种子", description: "为符合条件的新游提供冷启动流量支持。", source: "MP 内部能力", type: "internal", tags: ["冷启动", "流量"] },
-            { name: "增长种子", description: "面向具备增长潜力的游戏提供进一步的流量支持。", source: "MP 内部能力", type: "internal", tags: ["增长", "流量"] }
+            { name: "种子计划", description: "整合新游与增长阶段的种子流量，为符合条件的游戏提供冷启动及持续增长支持。", source: "MP 内部能力", type: "internal", tags: ["种子计划", "流量"] },
+            { name: "成长激励", description: "面向达到阶段目标的游戏提供成长激励，支持从冷启动向规模化增长过渡。", source: "MP 内部能力", type: "internal", tags: ["成长", "激励"] }
           ]},
           { title: "运营素材", hint: "降低早期内容生产和配置成本", items: [
             { name: "配置素材", required: true, description: "查看游戏发布及运营场景所需的素材规范、模板和配置指引。", source: "MP 内部能力", type: "internal", tags: ["规范", "模板"] }
           ]},
-          { title: "商业变现", hint: "满足条件后开通流量主并完成广告接入", items: [
-            { name: "流量主", description: "满足平台条件后开通流量主，创建广告位并完成游戏内广告接入。", source: "MP 内部能力 / 官方文档", type: "internal", tags: ["商业变现", "广告接入"] }
+          { title: "商业变现", hint: "开通广告变现与游戏内流量合作能力", items: [
+            { name: "流量主", description: "满足平台条件后开通流量主，创建广告位并完成游戏内广告接入。", source: "MP 内部能力 / 官方文档", type: "internal", tags: ["商业变现", "广告接入"] },
+            { name: "游戏内流量合作", description: "通过游戏内流量合作拓展效果结算渠道，为新游获取更多增量用户。", source: "教程介绍 / MP 内部能力", type: "document", tags: ["流量合作", "商业变现"], actions: [
+              { label: "教程介绍", linkName: "游戏内流量合作·教程介绍" },
+              { label: "内部能力", linkName: "游戏内流量合作·内部能力", secondary: true }
+            ]}
           ]}
         ]
       },
@@ -1123,7 +1142,7 @@
             { name: "排行榜", description: "构建用户竞争和持续参与机制，提升游戏活跃度。", source: "MP 内部能力", type: "internal", tags: ["活跃", "竞争"] }
           ]},
           { title: "进阶能力", hint: "通过社交和内容渠道进一步放大增长", items: [
-            { name: "广告卡", recommended: true, isNew: true, update: "新增广告卡样式配置，支持更多游戏场景使用。", description: "使用广告卡新能力拓展商业化变现方式。", source: "MP 内部能力", type: "internal", tags: ["商业化", "变现"] },
+            { name: "小游戏畅玩权益", recommended: true, isNew: true, update: "新增小游戏畅玩权益配置，支持更多游戏场景使用。", description: "通过畅玩权益承接激励与用户体验，拓展小游戏商业化和用户运营场景。", source: "MP 内部能力", type: "internal", tags: ["商业化", "权益"] },
             { name: "红包", description: "通过激励机制促进用户参与、分享及召回。", source: "MP 内部能力", type: "internal", tags: ["社交", "激励"] },
             { name: "擂台赛", description: "通过竞技玩法丰富内容运营形式，增强持续参与。", source: "MP 内部能力", type: "internal", tags: ["竞技", "运营"] },
             { name: "游戏圈", description: "沉淀游戏内容与玩家互动，承接社区运营场景。", source: "MP 内部能力", type: "internal", tags: ["社区", "互动"] }
@@ -1138,31 +1157,31 @@
     */
     const linkConfig = {
       "基础数据": { url: "", target: "_self" },
-      "小游戏数据助手": { url: "", target: "_blank" },
-      "数据接口": { url: "", target: "_blank" },
+      "小游戏数据助手": { url: "https://developers.weixin.qq.com/minigame/analysis/assistant.html#%E5%B0%8F%E6%B8%B8%E6%88%8F%E6%95%B0%E6%8D%AE%E5%8A%A9%E6%89%8B", target: "_blank" },
+      "数据接口": { url: "https://developers.weixin.qq.com/minigame/dev/guide/open-ability/data-analysis.html", target: "_blank" },
       "商业化工具箱": { url: "", target: "_self" },
       "收入诊断": { url: "", target: "_self" },
       "实验工具": { url: "", target: "_self" },
       "创意工具": { url: "", target: "_self" },
-      "历史案例参考": { url: "", target: "_blank" },
+      "历史案例参考": { url: "https://developers.weixin.qq.com/minigame/introduction/commercialization/case-share.html", target: "_blank" },
       "广告变现规划": { url: "./iaa-ad-monetization-plan.html", target: "_self" },
       "流量主": { url: "", target: "_self" },
-      "PC 拓展屏": { url: "", target: "_self" },
-      "转发分享": { url: "", target: "_blank" },
-      "一次性订阅消息": { url: "", target: "_self" },
-      "评价与推荐": { url: "", target: "_self" },
-      "版本提审": { url: "", target: "_self" },
-      "小游戏备案": { url: "", target: "_blank" },
+      "转发分享": { url: "https://developers.weixin.qq.com/minigame/dev/guide/open-ability/share/share.html?token=148194265", target: "_blank" },
+      "PC 端适配": { url: "https://developers.weixin.qq.com/minigame/dev/guide/open-ability/pc-game.html", target: "_blank" },
+      "一次性订阅消息": { url: "https://developers.weixin.qq.com/minigame/dev/guide/open-ability/subscribe-message.html?token=148194265", target: "_blank" },
+      "评价与推荐": { url: "https://developers.weixin.qq.com/minigame/dev/guide/open-ability/game-evaluate.html?token=148194265", target: "_blank" },
+      "提审与备案": { url: "https://developers.weixin.qq.com/minigame/introduction/guide/iaa.html", target: "_blank" },
       "广告开通与配置": { url: "", target: "_blank" },
-      "CPS 合作": { url: "", target: "_self" },
-      "新游种子": { url: "", target: "_self" },
-      "增长种子": { url: "", target: "_self" },
+      "游戏内流量合作·教程介绍": { url: "https://developers.weixin.qq.com/minigame/introduction/commercialization/special-abilities/cps-recommend.html", target: "_blank" },
+      "游戏内流量合作·内部能力": { url: "", target: "_self" },
+      "种子计划": { url: "", target: "_self" },
+      "成长激励": { url: "", target: "_self" },
       "配置素材": { url: "", target: "_self" },
       "广告投放": { url: "./iaa-ad-delivery-scene.html", target: "_self" },
       "视频号": { url: "./iaa-video-account-detail-commercial-plan.html", target: "_self" },
       "用户反馈": { url: "", target: "_self" },
       "排行榜": { url: "", target: "_self" },
-      "广告卡": { url: "", target: "_self" },
+      "小游戏畅玩权益": { url: "", target: "_self" },
       "红包": { url: "", target: "_self" },
       "擂台赛": { url: "", target: "_self" },
       "游戏圈": { url: "", target: "_self" }
@@ -1192,7 +1211,6 @@
     const toast = document.getElementById("toast");
     const toastLabel = document.getElementById("toast-label");
     let toastTimer;
-    let collapseTimer;
 
     function escapeHtml(v) {
       return String(v).replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#039;", '"': "&quot;" })[c]);
@@ -1206,12 +1224,21 @@
       return "";
     }
 
+    function renderAbilityActions(item) {
+      if (!item.actions) {
+        return '<button class="ability-detail placeholder-trigger" type="button" data-label="' + escapeHtml(item.name) + '" data-link-name="' + escapeHtml(item.name) + '">详情</button>';
+      }
+      return item.actions.map(action =>
+        '<button class="ability-detail placeholder-trigger' + (action.secondary ? ' secondary' : '') + '" type="button" data-label="' + escapeHtml(action.label) + '" data-link-name="' + escapeHtml(action.linkName) + '">' + escapeHtml(action.label) + '</button>'
+      ).join("");
+    }
+
     function renderAbilityCard(item) {
       return '<article class="ability-card" data-ability="' + escapeHtml(item.name) + '">'
         + '<div class="ability-top">'
         + '<h4 class="ability-name">' + escapeHtml(item.name) + ' ' + renderBadge(item) + (item.isNew ? '<span class="status-new">NEW</span>' : '') + '</h4>'
         + '<div class="ability-actions">' + (item.connected ? '<span class="status-connected">✓ 已接入</span>' : '')
-        + '<button class="ability-detail placeholder-trigger" type="button" data-label="' + escapeHtml(item.name) + '" data-link-name="' + escapeHtml(item.name) + '">详情</button></div>'
+        + renderAbilityActions(item) + '</div>'
         + '</div>'
         + '<p class="ability-description">' + escapeHtml(item.description) + '</p>'
         + '<div class="ability-update-slot">' + (item.update ? '<div class="update-note">更新：' + escapeHtml(item.update) + '</div>' : '') + '</div>'
@@ -1226,61 +1253,42 @@
 
     let selectedStage = null;
     let selectedGroup = -1;
+    const selectionStorageKey = "iaa-new-game-zone-selection";
 
-    function selectStageOnly(key, shouldScroll) {
-      const stageKeys = Object.keys(stages);
-      const activeIndex = stageKeys.indexOf(key);
-      selectedStage = key;
-      selectedGroup = -1;
-      journeyStatus.textContent = "当前阶段 · 发布启动期";
-      document.querySelectorAll(".stage").forEach(card => {
-        card.dataset.selected = String(card.dataset.stage === key);
-      });
-      document.querySelectorAll(".stage-main").forEach(btn => {
-        btn.setAttribute("aria-selected", String(btn.dataset.stage === key));
-      });
-      document.querySelectorAll(".stage-group").forEach(btn => {
-        btn.setAttribute("aria-selected", "false");
-        btn.setAttribute("aria-expanded", "false");
-      });
-      document.querySelectorAll(".stage-inline-detail").forEach(panel => panel.dataset.open = "false");
-      if (shouldScroll) document.querySelector('.stage[data-stage="' + key + '"]').scrollIntoView({ behavior: "smooth", block: "nearest" });
+    function persistSelection(stageKey, groupIndex) {
+      const state = { stage: stageKey, group: groupIndex };
+      try {
+        sessionStorage.setItem(selectionStorageKey, JSON.stringify(state));
+      } catch (error) {}
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set("stage", stageKey);
+        url.searchParams.set("group", String(groupIndex));
+        history.replaceState(null, "", url);
+      } catch (error) {}
     }
 
-    function renderInlineAbilities(key, group) {
-      document.querySelectorAll(".stage-inline-detail").forEach(panel => {
-        if (panel.dataset.inlineStage !== key) {
-          panel.dataset.open = "false";
-          return;
-        }
-        const selectedButton = document.querySelector('.stage-group[data-stage="' + key + '"][data-group-index="' + selectedGroup + '"]');
-        if (selectedButton) selectedButton.insertAdjacentElement("afterend", panel);
-        panel.dataset.open = "false";
-        panel.offsetHeight;
-        panel.innerHTML = sortItems(group.items).map(item =>
-          '<button class="inline-ability placeholder-trigger" type="button" data-label="' + escapeHtml(item.name) + '" data-link-name="' + escapeHtml(item.name) + '">'
-          + '<span class="inline-ability-head"><span class="inline-ability-name">' + escapeHtml(item.name) + '</span>'
-          + '<span class="inline-ability-statuses">'
-          + (item.connected ? '<span class="status-connected">✓ 已接入</span>' : '')
-          + (item.isNew ? '<span class="status-new">NEW</span>' : '')
-          + '<span class="inline-ability-arrow">&rsaquo;</span></span></span>'
-          + '<span class="inline-ability-desc">' + escapeHtml(item.description) + '</span>'
-          + (item.update ? '<span class="update-note">更新：' + escapeHtml(item.update) + '</span>' : '')
-          + '<span class="inline-ability-source">' + escapeHtml(item.source) + '</span>'
-          + '</button>'
-        ).join("");
-        bindPlaceholders(panel);
-        requestAnimationFrame(() => panel.dataset.open = "true");
-      });
+    function resolveInitialSelection(defaultStage) {
+      let stageKey = defaultStage;
+      let groupIndex = 0;
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const saved = JSON.parse(sessionStorage.getItem(selectionStorageKey) || "null");
+        stageKey = params.get("stage") || (saved && saved.stage) || defaultStage;
+        groupIndex = Number(params.get("group") ?? (saved && saved.group) ?? 0);
+      } catch (error) {}
+      if (!stages[stageKey]) stageKey = defaultStage;
+      if (!Number.isInteger(groupIndex) || groupIndex < 0 || groupIndex >= stages[stageKey].groups.length) groupIndex = 0;
+      return { stage: stageKey, group: groupIndex };
     }
 
     function renderSelection(key, groupIndex, scrollToDetail) {
-      clearTimeout(collapseTimer);
       const stage = stages[key];
       const safeGroupIndex = Math.min(Math.max(groupIndex, 0), stage.groups.length - 1);
       const group = stage.groups[safeGroupIndex];
       selectedStage = key;
       selectedGroup = safeGroupIndex;
+      persistSelection(key, safeGroupIndex);
 
       const stageKeys = Object.keys(stages);
       const activeIndex = stageKeys.indexOf(key);
@@ -1309,11 +1317,7 @@
         btn.addEventListener("click", e => {
           e.stopPropagation();
           const groupIndex = Number(btn.dataset.groupIndex);
-          if (selectedStage === key && selectedGroup === groupIndex && detailSection.dataset.visible === "true") {
-            collapseDetails();
-          } else {
-            renderSelection(key, groupIndex, false);
-          }
+          renderSelection(key, groupIndex, false);
         });
       });
       detailContent.style.animation = "none";
@@ -1326,25 +1330,6 @@
       detailContent.style.animation = "content-in .3s var(--ease) both";
       bindPlaceholders(detailContent);
       if (scrollToDetail) detailSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-
-    function collapseDetails() {
-      selectedStage = null;
-      selectedGroup = -1;
-      detailSection.dataset.visible = "false";
-      document.querySelectorAll(".stage").forEach(card => card.dataset.selected = String(card.dataset.stage === "launch"));
-      document.querySelectorAll(".stage-main").forEach(btn => btn.setAttribute("aria-selected", String(btn.dataset.stage === "launch")));
-      document.querySelectorAll(".stage-group").forEach(btn => {
-        btn.setAttribute("aria-selected", "false");
-        btn.setAttribute("aria-expanded", "false");
-      });
-      clearTimeout(collapseTimer);
-      collapseTimer = setTimeout(() => {
-        if (detailSection.dataset.visible === "false") {
-          frameworkTabs.innerHTML = "";
-          detailContent.innerHTML = "";
-        }
-      }, 360);
     }
 
     function showToast(label) {
@@ -1377,32 +1362,25 @@
 
     document.querySelectorAll(".stage-main").forEach(btn => {
       btn.addEventListener("click", () => {
-        if (selectedStage === btn.dataset.stage && detailSection.dataset.visible === "true") collapseDetails();
-        else renderSelection(btn.dataset.stage, 0, true);
+        renderSelection(btn.dataset.stage, 0, true);
       });
     });
     document.querySelectorAll(".journey-node").forEach(btn => {
       btn.addEventListener("click", () => {
-        if (selectedStage === btn.dataset.stage && detailSection.dataset.visible === "true") collapseDetails();
-        else renderSelection(btn.dataset.stage, 0, true);
+        renderSelection(btn.dataset.stage, 0, true);
       });
     });
     document.querySelectorAll(".stage").forEach(card => {
       card.addEventListener("click", e => {
         if (e.target.closest("button")) return;
-        if (selectedStage === card.dataset.stage && detailSection.dataset.visible === "true") collapseDetails();
-        else renderSelection(card.dataset.stage, 0, true);
+        renderSelection(card.dataset.stage, 0, true);
       });
     });
     document.querySelectorAll(".stage-group").forEach(btn => {
       btn.addEventListener("click", e => {
         e.stopPropagation();
         const groupIndex = Number(btn.dataset.groupIndex);
-        if (selectedStage === btn.dataset.stage && selectedGroup === groupIndex && detailSection.dataset.visible === "true") {
-          collapseDetails();
-        } else {
-          renderSelection(btn.dataset.stage, groupIndex, true);
-        }
+        renderSelection(btn.dataset.stage, groupIndex, true);
       });
     });
 
@@ -1425,12 +1403,9 @@
     document.querySelectorAll(".stage").forEach(card => card.dataset.selected = String(card.dataset.stage === currentStageKey));
     document.querySelectorAll(".stage-main").forEach(btn => btn.setAttribute("aria-selected", String(btn.dataset.stage === currentStageKey)));
     syncUpdateIndicators();
+    const initialSelection = resolveInitialSelection(currentStageKey);
+    renderSelection(initialSelection.stage, initialSelection.group, false);
     bindPlaceholders();
-    document.addEventListener("click", e => {
-      if (detailSection.dataset.visible !== "true") return;
-      if (e.target.closest(".map-canvas, .journey-rail, .detail-section")) return;
-      collapseDetails();
-    });
   </script>
 </body>
 </html>
