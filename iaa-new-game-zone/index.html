@@ -636,6 +636,7 @@
     .detail-content { animation: content-in .3s var(--ease) both; }
     .detail-content { padding: 0 28px 26px; }
     .detail-section .framework-tabs { display: flex; }
+    .detail-section .framework-tabs[hidden] { display: none; }
     .detail-section .framework-tab {
       display: inline-flex;
       align-items: center;
@@ -976,8 +977,7 @@
           <span class="stage-intro">寻找方向，判断市场机会</span>
         </button>
         <div class="stage-groups">
-          <button class="stage-group" type="button" data-stage="planning" data-group-index="0" aria-selected="false">创意与趋势<i>&rsaquo;</i></button>
-          <button class="stage-group" type="button" data-stage="planning" data-group-index="1" aria-selected="false">历史案例<i>&rsaquo;</i></button>
+          <button class="stage-group" type="button" data-stage="planning" data-group-index="0" aria-selected="false">立项准备<i>&rsaquo;</i></button>
         </div>
         <div class="stage-inline-detail" data-inline-stage="planning"></div>
       </article>
@@ -1084,11 +1084,13 @@
         description: "借助生态热点和历史案例完成选品、题材判断与创意验证。",
         singleView: true,
         groups: [
-          { title: "创意与趋势", hint: "通过生态热点判断市场机会", items: [
-            { name: "创意工具", description: "查看微信生态热门游戏、热搜与热词，发现用户关注方向和潜在赛道。", source: "MP 后台看板", type: "internal", tags: ["创意", "趋势"] }
-          ]},
-          { title: "历史案例", hint: "通过已有实践降低立项试错成本", items: [
-            { name: "历史案例参考", description: "参考优质 IAA 游戏案例、典型增长路径与关键经验，降低立项试错成本。", source: "官方文档", type: "document", tags: ["案例", "立项"] }
+          { title: "立项准备", hint: "从方向判断、案例参考到资质提交，完成立项前的必要准备", items: [
+            { name: "创意工具", description: "查看微信生态热门游戏、热搜与热词，发现用户关注方向和潜在赛道。", source: "MP 后台看板", type: "internal", tags: ["创意", "趋势"] },
+            { name: "历史案例参考", description: "参考优质 IAA 游戏案例、典型增长路径与关键经验，降低立项试错成本。", source: "官方文档", type: "document", tags: ["案例", "立项"] },
+            { name: "资质提交", description: "了解 IAA 小游戏资质要求并完成相关材料提交，为后续开发与上线做好准备。", source: "官方文档 / MP 内部能力", type: "document", tags: ["资质", "提交"], actions: [
+              { label: "文档说明", linkName: "资质提交·文档说明", secondary: true },
+              { label: "前往提交", linkName: "资质提交·前往提交" }
+            ]}
           ]}
         ]
       },
@@ -1164,6 +1166,8 @@
       "实验工具": { url: "", target: "_self" },
       "创意工具": { url: "", target: "_self" },
       "历史案例参考": { url: "https://developers.weixin.qq.com/minigame/introduction/commercialization/case-share.html", target: "_blank" },
+      "资质提交·文档说明": { url: "https://developers.weixin.qq.com/minigame/introduction/guide/zzsh-iaa.html", target: "_blank" },
+      "资质提交·前往提交": { url: "", target: "_self" },
       "广告变现规划": { url: "./iaa-ad-monetization-plan.html", target: "_self" },
       "流量主": { url: "", target: "_self" },
       "转发分享": { url: "https://developers.weixin.qq.com/minigame/dev/guide/open-ability/share/share.html?token=148194265", target: "_blank" },
@@ -1309,17 +1313,22 @@
       detailTitle.textContent = stage.title;
       detailDescription.textContent = stage.description;
 
-      frameworkTabs.innerHTML = stage.groups.map((tab, idx) =>
-        '<button class="framework-tab" type="button" role="tab" aria-selected="' + (idx === safeGroupIndex) + '" data-group-index="' + idx + '">' + escapeHtml(tab.title)
-        + (tab.items.some(item => item.isNew) ? '<span class="tab-update-dot" aria-label="存在新功能"></span>' : '') + '</button>'
-      ).join("");
-      frameworkTabs.querySelectorAll(".framework-tab").forEach(btn => {
-        btn.addEventListener("click", e => {
-          e.stopPropagation();
-          const groupIndex = Number(btn.dataset.groupIndex);
-          renderSelection(key, groupIndex, false);
+      frameworkTabs.hidden = Boolean(stage.singleView);
+      if (stage.singleView) {
+        frameworkTabs.innerHTML = "";
+      } else {
+        frameworkTabs.innerHTML = stage.groups.map((tab, idx) =>
+          '<button class="framework-tab" type="button" role="tab" aria-selected="' + (idx === safeGroupIndex) + '" data-group-index="' + idx + '">' + escapeHtml(tab.title)
+          + (tab.items.some(item => item.isNew) ? '<span class="tab-update-dot" aria-label="存在新功能"></span>' : '') + '</button>'
+        ).join("");
+        frameworkTabs.querySelectorAll(".framework-tab").forEach(btn => {
+          btn.addEventListener("click", e => {
+            e.stopPropagation();
+            const groupIndex = Number(btn.dataset.groupIndex);
+            renderSelection(key, groupIndex, false);
+          });
         });
-      });
+      }
       detailContent.style.animation = "none";
       detailContent.offsetHeight;
       detailContent.innerHTML = '<p class="framework-hint">' + escapeHtml(group.hint) + '</p>'
